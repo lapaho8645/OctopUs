@@ -1,4 +1,52 @@
 <template>
+<<<<<<< HEAD
+  <div>
+    <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+      <template slot="progress">
+        <v-progress-linear
+          color="deep-purple"
+          height="10"
+          indeterminate
+        ></v-progress-linear>
+      </template>
+
+      <v-card-title>MissionTitle</v-card-title>
+
+      <v-card-text>
+        <div class="my-4 text-subtitle-1">룸 코드</div>
+      </v-card-text>
+      <v-card-text>
+        <div class="my-4 text-subtitle-1">참가자 명단</div>
+      </v-card-text>
+
+      <v-card-title> 필요한 포인트 </v-card-title>
+
+      <v-card-actions>
+        <v-card-text color="orange" text> Explore </v-card-text>
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon @click="show = !show">
+          <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+
+      <v-expand-transition>
+        <div v-show="show">
+          <v-divider></v-divider>
+
+          <v-card-text> 방 설명 </v-card-text>
+        </div>
+      </v-expand-transition>
+
+      <!-- calendar 서랍 ---------------------------------------- -->
+      <v-card-actions>
+        <v-card-text color="orange" text> Calendar </v-card-text>
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon @click="calendarShow = !calendarShow">
+=======
   <v-container>
     <v-img
       :src="require(`../assets/img/Theme/${this.mission.missionType}.jpg`)"
@@ -199,11 +247,19 @@
         <v-spacer></v-spacer>
 
         <v-btn icon @click="getInfo()">
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
           <v-icon>{{
             calendarShow ? "mdi-chevron-up" : "mdi-chevron-down"
           }}</v-icon>
         </v-btn>
       </v-card-actions>
+<<<<<<< HEAD
+      <!-- -------------------------------------------------------- -->
+      <!-- 캘린더 view --------------------------------------------- -->
+      <v-expand-transition>
+        <div v-show="calendarShow">
+          <v-divider></v-divider>
+=======
       <v-expand-transition>
         <div v-show="calendarShow">
           <v-card-title>
@@ -222,6 +278,7 @@
               <b>해당 미션은 종료되었습니다.</b>
             </div>
           </v-card-title>
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
           <v-row class="fill-height">
             <v-col>
               <v-sheet height="64">
@@ -251,11 +308,62 @@
                 <v-calendar
                   ref="calendar"
                   v-model="focus"
+<<<<<<< HEAD
+                  color="#E63946"
+=======
                   color="#ffadad"
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
                   :events="events"
                   :event-color="getEventColor"
                   :type="type"
                   @click:event="showEvent"
+<<<<<<< HEAD
+                  @click:more="showAllEvent"
+                  @change="updateRange"
+                ></v-calendar>
+                <v-menu
+                  v-model="selectedOpen"
+                  :close-on-content-click="false"
+                  :activator="selectedElement"
+                  offset-x
+                >
+                  <!-- 클릭하면 나오는 상세 창 -------------------------------- -->
+                  <v-card color="grey lighten-4" min-width="350px" flat>
+                    <v-toolbar :color="selectedEvent.color" dark>
+                      <v-toolbar-title
+                        v-html="selectedEvent.name"
+                      ></v-toolbar-title>
+                      <v-spacer></v-spacer>
+                      <v-btn icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
+                      </v-btn>
+                    </v-toolbar>
+                    <v-card-text>
+                      <span v-html="selectedEvent.details"></span>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn
+                        text
+                        color="secondary"
+                        @click="selectedOpen = false"
+                      >
+                        Cancel
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                  <!-- -------------------------------------------------- -->
+                </v-menu>
+              </v-sheet>
+            </v-col>
+          </v-row>
+        </div>
+      </v-expand-transition>
+      <!-- -------------------------------------------------------------------- -->
+
+      <!-- 인증하기 서랍 ----------------------------------------- -->
+      <v-card-actions>
+        <v-card-text color="orange" text> 인증하기 </v-card-text>
+=======
                   short-intervals
                 ></v-calendar>
                 <div class="text-center">
@@ -331,6 +439,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <div class="my-4 text-subtitle-1">인증하기</div>
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
 
         <v-spacer></v-spacer>
 
@@ -340,6 +449,51 @@
           }}</v-icon>
         </v-btn>
       </v-card-actions>
+<<<<<<< HEAD
+      <!-- -------------------------------------------------------- -->
+      <!-- 카메라로 인증하기 --------------------------------------- -->
+      <v-expand-transition>
+        <div v-show="cameraShow">
+          <web-cam
+            ref="webcam"
+            :device-id="deviceId"
+            width="100%"
+            @started="onStarted"
+            @stopped="onStopped"
+            @error="onError"
+            @cameras="onCameras"
+            @camera-change="onCameraChange"
+          />
+          <v-btn type="button" class="btn btn-primary" @click="onCapture">
+            찍기
+          </v-btn>
+          <v-spacer></v-spacer>
+          미리보기
+          <figure class="figure">
+            <img :src="img" width="100%" />
+          </figure>
+          <v-btn v-if="img != null" @click="onSave">올리기</v-btn>
+          <v-btn v-if="img != null" @click="onRestart">다시 찍기</v-btn>
+        </div>
+      </v-expand-transition>
+      <!-- -------------------------------------------------------- -->
+    </v-card>
+  </div>
+</template>
+
+<script>
+import { WebCam } from "vue-web-cam";
+import { find, head } from "lodash";
+export default {
+  components: {
+    WebCam,
+  },
+  data: () => ({
+    picture: "",
+    content: "",
+    show: false,
+    calendarShow: false,
+=======
       <v-expand-transition>
         <div v-show="cameraShow">
           <v-divider></v-divider>
@@ -389,11 +543,16 @@ export default {
     picture: "",
     calendarShow: false,
     missionInfoShow: false,
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     cameraShow: false,
     cameraon: true,
     bURL: "blob:",
     focus: "",
+<<<<<<< HEAD
+    type: "month",
+=======
     type: "week",
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     typeToLabel: {
       month: "Month",
       week: "Week",
@@ -407,6 +566,89 @@ export default {
     events: [],
     // 캘린더 이벤트 색 8개
     colors: [
+<<<<<<< HEAD
+      "#F1FAEE",
+      "#A8DADC",
+      "#1D3557",
+      "#457B9D",
+      "#FDFFB6",
+      "#FFADAD",
+      "#ED7E9C",
+      "#A0BAD0",
+    ],
+    names: ["Nickname"],
+    // camera ----------
+    img: null,
+    camera: null,
+    deviceId: null,
+    devices: [],
+    // ------------------
+  }),
+  computed: {
+    device() {
+      return find(this.devices, (n) => n.deviceId == this.deviceId);
+    },
+  },
+  watch: {
+    camera: function (id) {
+      this.deviceId = id;
+    },
+    devices: function () {
+      // Once we have a list select the first one
+      let first = head(this.devices);
+      if (first) {
+        this.camera = first.deviceId;
+        this.deviceId = first.deviceId;
+      }
+    },
+  },
+  methods: {
+    //camera methods-------------------------------------------
+    onCapture() {
+      this.img = this.$refs.webcam.capture();
+    },
+    onStarted(stream) {
+      console.log("On Started Event", stream);
+    },
+    onStopped(stream) {
+      console.log("On Stopped Event", stream);
+    },
+    onStop() {
+      this.$refs.webcam.stop();
+    },
+    onStart() {
+      this.$refs.webcam.start();
+    },
+    onError(error) {
+      console.log("On Error Event", error);
+    },
+    onCameras(cameras) {
+      this.devices = cameras;
+      console.log("On Cameras Event", cameras);
+    },
+    onCameraChange(deviceId) {
+      this.deviceId = deviceId;
+      this.camera = deviceId;
+      console.log("On Camera Change Event", deviceId);
+    },
+    onRestart() {
+      this.$refs.webcam.stop();
+      this.img = null;
+      this.$refs.webcam.start();
+    },
+    onSave() {
+      console.log(this.img);
+      this.$refs.webcam.stop();
+      this.cameraShow = false;
+      console.log(this.img);
+      // 서버에 img 전송하는 코드 추가........ㅠ_ㅠ
+      this.img = null;
+      this.$refs.webcam.start();
+    },
+    //------------------------------------------------
+
+    // 달력과 관련된 methods---------------------------
+=======
       "#fa183e",
       "#ffbbed",
       "#8500ff",
@@ -608,6 +850,7 @@ export default {
       this.calendarShow = !this.calendarShow;
       this.events = events;
     },
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     viewDay({ date }) {
       this.focus = date;
       this.type = "day";
@@ -625,12 +868,16 @@ export default {
       this.$refs.calendar.next();
     },
     showEvent({ nativeEvent, event }) {
+<<<<<<< HEAD
+      const open = () => {
+=======
       const temp =
         event.name + " " + event.start + " " + this.colors.indexOf(event.color);
 
       const open = () => {
         this.pictures = this.pictureList[temp];
         this.clickDate = event.start;
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
         this.selectedEvent = event;
         this.selectedElement = nativeEvent.target;
         requestAnimationFrame(() =>
@@ -647,6 +894,41 @@ export default {
 
       nativeEvent.stopPropagation();
     },
+<<<<<<< HEAD
+    // showAllEvent({nativeEvent, event}){
+    //   // 해당 요일 모든 이벤트를 출력해주는 함수 생성
+    // },
+    updateRange({ start, end }) {
+      const events = [];
+
+      const min = new Date(`${start.date}T00:00:00`);
+      const max = new Date(`${end.date}T23:59:59`);
+      const days = (max.getTime() - min.getTime()) / 86400000;
+      const eventCount = this.rnd(days, days + 20);
+
+      for (let i = 0; i < eventCount; i++) {
+        const allDay = this.rnd(0, 3) === 0;
+        const firstTimestamp = this.rnd(min.getTime(), max.getTime());
+        const first = new Date(firstTimestamp - (firstTimestamp % 900000));
+        const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
+        const second = new Date(first.getTime() + secondTimestamp);
+
+        events.push({
+          name: this.names[this.rnd(0, this.names.length - 1)],
+          start: first,
+          end: second,
+          color: this.colors[this.rnd(0, this.colors.length - 1)],
+          timed: !allDay,
+        });
+      }
+
+      this.events = events;
+    },
+    rnd(a, b) {
+      return Math.floor((b - a + 1) * Math.random()) + a;
+    },
+=======
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
   },
 };
 </script>
@@ -665,6 +947,8 @@ li {
 a {
   color: #42b983;
 }
+<<<<<<< HEAD
+=======
 ::v-deep .v-calendar .v-calendar-daily__body {
   display: none;
 }
@@ -689,4 +973,5 @@ a {
   align-items: center;
   padding: 0;
 }
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
 </style>

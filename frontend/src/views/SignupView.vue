@@ -1,4 +1,96 @@
 <template>
+<<<<<<< HEAD
+  <v-container style="width: 450px">
+    <v-layout align-center row wrap>
+      <v-flex xs12>
+        <v-alert v-if="isError" type="error">
+          {{ errorMsg }}
+        </v-alert>
+        <v-card>
+          <v-toolbar flat color="indigo">
+            <v-toolbar-title
+              ><span class="white--text">회원가입</span></v-toolbar-title
+            >
+          </v-toolbar>
+          <div class="pa-5">
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-text-field
+                v-model="user.email"
+                :rules="emailRules"
+                label="Enter E-mail"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                v-model="user.userid"
+                label="userid"
+                required
+              ></v-text-field>
+              중복검사
+              <v-icon @click="idcheck">mdi-check-bold</v-icon>
+
+              <v-text-field
+                v-model="user.avatar"
+                label="Avatar"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                v-model="user.usernickname"
+                :counter="10"
+                :rules="nameRules"
+                label="Name"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                v-model="user.userpwd"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="show ? 'text' : 'password'"
+                label="Enter Password"
+                hint="At least 8 characters"
+                counter
+                @click:append="show = !show"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="chkPassword"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="show ? 'text' : 'password'"
+                label="Enter Password Again"
+                hint="At least 8 characters"
+                counter
+                @click:append="show = !show"
+              ></v-text-field>
+
+              <h6 v-if="sameChk(chkPassword)" class="mb-5 teal--text accent-3">
+                Please create the two passwords identical.
+              </h6>
+              <h6 v-else class="mb-5 red--text lighten-2">
+                Please create the two passwords identical.
+              </h6>
+
+              <div class="mt-3 d-flex flex-row-reverse">
+                <v-btn color="error" class="mr-4" @click="reset"> 리셋 </v-btn>
+
+                <v-btn
+                  :disabled="!valid"
+                  color="blue"
+                  class="mr-4"
+                  @click="register()"
+                >
+                  회원가입
+                </v-btn>
+              </div>
+            </v-form>
+          </div>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
+=======
   <div>
     <v-container>
       <v-row class="py-3">
@@ -542,10 +634,20 @@
       </v-card>
     </v-dialog>
   </div>
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
 </template>
 
 <script>
 import axios from "axios";
+<<<<<<< HEAD
+// import { apiInstance } from "../api/index.js";
+
+// import http from "../utils/http-common.js";
+
+// const api = apiInstance();
+
+=======
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
 export default {
   data: () => ({
     user: {
@@ -553,6 +655,16 @@ export default {
       userpwd: null,
       usernickname: null,
       email: null,
+<<<<<<< HEAD
+      avatar: null,
+    },
+    userIdChk: true,
+
+    valid: false,
+    nameRules: [
+      (v) => !!v || "Name is required",
+      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+=======
       avatar: 0,
     },
     aouthcode: null,
@@ -587,10 +699,36 @@ export default {
       (v) => !!v || "필수 항목입니다.",
       (v) => (v && v.length <= 10) || "4글자이상 10글자이하로 입력해주세요",
       (v) => (v && v.length >= 4) || "4글자이상 10글자이하로 입력해주세요",
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     ],
     isError: false,
     errorMsg: "",
     emailRules: [
+<<<<<<< HEAD
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+    ],
+    show: false,
+    chkPassword: "",
+    rules: {
+      required: (value) => !!value || "Required.",
+      min: (v) => v.length >= 8 || "Min 8 characters",
+    },
+  }),
+  methods: {
+    idcheck() {
+      axios
+        .get(`api/user/idcheck/${this.user.userid}`)
+        .then(({ data }) => {
+          let msg = "중복된 아이디입니다. 다시 입력해주세요";
+          if (data === "success") {
+            msg = "사용가능한 아이디입니다.";
+            this.userIdChk = true;
+            alert(msg);
+          } else {
+            alert(msg);
+            this.$router.push({ name: "signUp" });
+=======
       (v) => !!v || "필수 항목입니다.",
       (v) => {
         if (v) {
@@ -631,10 +769,17 @@ export default {
             this.userIdChk = true;
           } else {
             this.userIdChk = false;
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
           }
         })
         .catch((error) => {
           console.log(error);
+<<<<<<< HEAD
+          alert("ID중복체크에 실패했습니다..");
+        })
+        .finally(() => {
+          console.log(this.user.userid);
+=======
           this.idmsg = "ID중복체크에 실패했습니다..";
         })
         .finally(() => {
@@ -708,11 +853,16 @@ export default {
         })
         .finally(() => {
           this.EmailDialog = true;
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
         });
     },
     movePage() {
       this.$router.push({ name: "Login" });
     },
+<<<<<<< HEAD
+
+=======
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     goToMain() {
       this.$router.push({
         name: "MainView",
@@ -730,6 +880,12 @@ export default {
         !this.user.email ||
         !this.user.usernickname ||
         !this.user.userpwd ||
+<<<<<<< HEAD
+        !this.user.avatar
+      ) {
+        this.isError = true;
+        this.errorMsg = "이메일과 닉네임과 비밀번호를 모두 입력해주세요.";
+=======
         this.user.avatar === null ||
         !this.codeChk ||
         !this.userIdChk ||
@@ -738,6 +894,7 @@ export default {
       ) {
         this.isError = true;
         this.errorMsg = "가입에 필요한 정보를 모두 입력해주세요.";
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
         return;
       }
       axios
@@ -748,12 +905,31 @@ export default {
           userNickname: this.user.usernickname,
           userAvatar: this.user.avatar,
         })
+<<<<<<< HEAD
+        .then(({ data }) => {
+          let msg = "등록 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "등록이 완료되었습니다.";
+            console.log(msg);
+          }
+          console.log(data);
+          alert(msg);
+=======
         .then(() => {
           this.registermsg = "등록이 완료되었습니다.";
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
           this.movePage();
         })
         .catch((error) => {
           console.log(error);
+<<<<<<< HEAD
+          alert("등록 실패입니다.");
+        })
+        .finally(() => {
+          console.log(this.user.userid);
+          console.log(this.user.userpwd);
+          console.log(this.user.username);
+=======
           this.registermsg = "등록 실패입니다.";
         })
         .finally(() => {
@@ -762,6 +938,7 @@ export default {
           } else {
             this.registerDialog = true;
           }
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
         });
     },
     validate() {
@@ -769,11 +946,19 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
+<<<<<<< HEAD
+=======
       this.$refs.nicknameForm.reset();
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     },
     resetValidation() {
       this.$refs.form.resetValidation();
     },
+<<<<<<< HEAD
+  },
+};
+</script>
+=======
     setavater(i) {
       this.user.avatar = i;
     },
@@ -782,3 +967,4 @@ export default {
 </script>
 
 <style></style>
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95

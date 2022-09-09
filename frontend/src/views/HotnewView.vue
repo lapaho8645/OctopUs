@@ -1,4 +1,27 @@
 <template>
+<<<<<<< HEAD
+  <v-container>
+    <br /><br /><br /><br />
+    여기는 뜰까?
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Name</th>
+            <th class="text-left">Calories</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(newmission, index) in hotmissions" :key="index">
+            <td>왜 안뜨는거지????</td>
+            <td>{{ newmission }}</td>
+            <td>{{ newmission.missionTitle }}</td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+  </v-container>
+=======
   <div class="wrapper">
     <header-view></header-view>
     <v-card>
@@ -187,10 +210,24 @@
     </v-card>
     <footer-view></footer-view>
   </div>
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
 </template>
 
 <script>
 import axios from "axios";
+<<<<<<< HEAD
+
+export default {
+  data() {
+    return {
+      hotmissions: [],
+      newmissions: [],
+    };
+  },
+
+  created() {
+    var vm = this;
+=======
 import HeaderView from "../components/common/HeaderView.vue";
 import FooterView from "../components/common/FooterView.vue";
 export default {
@@ -234,6 +271,7 @@ export default {
     axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${sessionStorage.getItem("token")}`;
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
     axios
       .get(`api/mission/new`, {
         headers: {
@@ -242,6 +280,14 @@ export default {
         },
       })
       .then(function (response) {
+<<<<<<< HEAD
+        console.log(response);
+
+        console.log("첫번째 데이터가 뭐게요");
+        console.log(response.data[0]);
+        vm.hotmissions = response.data;
+        console.log(vm.hotmissions);
+=======
         vm.newmissions = response.data;
         for (let index = 0; index < vm.newmissions.length; index++) {
           const newmission = vm.newmissions[index];
@@ -288,6 +334,7 @@ export default {
           }
           vm.hotavatars[index] = list2;
         }
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
       })
       .catch(function (err) {
         console.log(err);
@@ -296,8 +343,12 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
+<style></style>
+=======
 <style>
 .wrapper {
   height: 100%;
 }
 </style>
+>>>>>>> ac048782d308840093efdf3b8146c990ec2fcf95
